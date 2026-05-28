@@ -392,7 +392,7 @@
     <ul class="cat-list">
       <li><a href="#A1"><span class="code">A1</span>事業者への返信メール</a></li>
       <li><a href="#A2"><span class="code">A2</span>講習会・相談会の告知文</a></li>
-      <li><a href="#A3"><span class="code">A3</span>補助金募集の会員向け案内</a></li>
+      <li><a href="#A3"><span class="code">A3</span>補助金募集の会員向け案内（URL読み取り型）</a></li>
       <li><a href="#A4"><span class="code">A4</span>セミナー告知メール</a></li>
       <li><a href="#A5"><span class="code">A5</span>議事録ドラフト</a></li>
     </ul>
@@ -543,17 +543,31 @@
     </article>
 
     <article class="card" id="A3">
-      <div class="card-head"><span class="card-num">A3</span><h3>📨 補助金募集の会員向け案内</h3></div>
-      <div class="scene">ものづくり補助金の公募開始を会員にメール案内</div>
+      <div class="card-head"><span class="card-num">A3</span><h3>📨 補助金募集の会員向け案内（URL読み取り型）</h3></div>
+      <div class="scene">補助金公募サイトの URL を渡して、要点を読み取り会員向け案内メールを自動作成</div>
       <div class="prompt-box">
         <button class="copy-btn" data-target="prompt-A3">📋 コピー</button>
-<pre id="prompt-A3">会員向けに「ものづくり補助金 第23次」の案内メールを作って。
-補助率1/2（小規模事業者2/3）・補助上限3,000万円（賃上げ特例適用時 最大4,000万円）・申請期限5/8。
-商工会で事業計画書策定相談が無料です。
-件名35字以内・本文600字くらいで。
-末尾に「採択を保証するものではありません」を入れて。</pre>
+<pre id="prompt-A3">以下の補助金公募サイトを読み取り、要点をまとめて会員事業者向けの案内メールを作成してください。
+
+【補助金公募サイトURL】
+（ここに URL を貼り付け）
+
+【メールに含める要点】
+・補助金名／実施主体
+・補助対象者（小規模事業者向けかどうか）
+・補助対象事業／使途
+・補助上限額・補助率（賃上げ特例などがあれば併記）
+・公募期間（特に締切日を強調）
+・申請方法のポイント
+
+【条件】
+・件名は補助金名＋締切を含み 35 字以内
+・本文は商工会会員向けの丁寧な口調で 500〜700 字
+・本文末尾に「商工会で事業計画書策定の無料相談を承っています」と案内
+・最後に「採択を保証するものではありません」を必ず入れる
+・「最新情報は公募要領を必ずご確認ください」の一文を添える</pre>
       </div>
-      <div class="tips"><strong>採択保証 NG</strong> を必ず入れる。煽り表現（今すぐ・絶対）も避ける。</div>
+      <div class="tips"><strong>URL を貼るだけで Gemini がサイトを読んで要点を整理してくれる。</strong>ただし出力は必ず<strong>公募要領の原典で再確認</strong>を。<strong>採択保証 NG</strong>・煽り表現（今すぐ・絶対）も避ける。</div>
     </article>
 
     <article class="card" id="A4">
@@ -1567,7 +1581,7 @@ A4片面チラシの構成案を作成してください。デザイナーが作
 ・「採択保証」のような表現は使わない
 ・補助率や上限額は事業者から提供された情報以外を勝手に書かない</pre>
       </div>
-      <div class="tips">A3 と F3 は似ていますが、A3 は簡易版、F3 は構造化版（件名＋本文＋注意書き）。</div>
+      <div class="tips">A3 と F3 の使い分け：<strong>A3 は URL を貼って Gemini に自動収集</strong>させるタイプ／<strong>F3 は手元の情報を構造化して指示</strong>するタイプ。URL があるなら A3、手元資料から組み立てるなら F3。</div>
     </article>
   </section>
 
