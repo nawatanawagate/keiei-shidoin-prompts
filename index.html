@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="bingbot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>プロンプト集（限定配布用）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#1a1a1a; --white:#fff;
+    --text:#2c3e50; --text-soft:#5d6d7e;
+    --primary:#0288D1;       /* 爽やかブルー（メイン） */
+    --primary-dark:#01579B;  /* 深いブルー（強調・ダーク） */
+    --primary-soft:#E1F5FE;  /* 極薄ブルー（背景） */
+    --primary-mid:#4FC3F7;   /* ミディアム（アクセント） */
+    --primary-accent:#00BCD4;/* シアン（差し色） */
+    --warn:#E53935;          /* 警告は赤（注意喚起用） */
+    --warn-soft:#FFEBEE;
+    --yellow:#FFF59D;
+    --bg:#f5f9fc; --bg-card:#fff;
+    --border:#d8e6ef; --border-light:#eef4f8;
+    --code-bg:#1a2733; --code-text:#e8f0f7;
+    --shadow:0 2px 12px rgba(2,136,209,.08);
+    --shadow-hover:0 8px 24px rgba(2,136,209,.18);
+    --font: 'Noto Sans JP', 'Meiryo UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sidebar-w: 280px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth; scroll-padding-top:80px;}
+  body{
+    background:var(--bg);
+    font-family:var(--font);
+    color:var(--text);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--primary-dark);text-decoration:none;}
+  a:hover{color:var(--primary);text-decoration:underline;}
+
+  /* ======== サイドバー ======== */
+  .sidebar{
+    position:fixed; left:0; top:0; bottom:0;
+    width:var(--sidebar-w);
+    background:#fff; border-right:1px solid var(--border);
+    overflow-y:auto; padding:24px 18px;
+    z-index:100;
+  }
+  .sidebar .brand{
+    font-weight:900; font-size:18px; color:var(--black);
+    padding:0 8px 16px; border-bottom:2px solid var(--primary);
+    margin-bottom:16px;
+  }
+  .sidebar .brand small{color:var(--text-soft);font-weight:500;font-size:11px;display:block;margin-top:3px;}
+  .sidebar .search{
+    width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;
+    font-family:var(--font);font-size:13px;margin-bottom:14px;
+  }
+  .sidebar .search:focus{outline:none;border-color:var(--primary);}
+  .sidebar .cat-group{margin-bottom:14px;}
+  .sidebar .cat-title{
+    font-size:12px;font-weight:700;color:var(--primary);
+    padding:4px 8px;letter-spacing:.05em;margin-bottom:4px;
+    text-transform:uppercase;
+  }
+  .sidebar .cat-list{list-style:none;}
+  .sidebar .cat-list li{margin:1px 0;}
+  .sidebar .cat-list a{
+    display:block;padding:6px 10px;font-size:12.5px;color:var(--text);
+    border-radius:5px;border-left:3px solid transparent;
+  }
+  .sidebar .cat-list a:hover{
+    background:var(--primary-soft);color:var(--primary-dark);
+    border-left-color:var(--primary);text-decoration:none;
+  }
+  .sidebar .cat-list a .code{
+    color:var(--primary);font-weight:700;font-family:var(--font-mono);
+    font-size:11px;margin-right:6px;
+  }
+
+  /* ======== メイン ======== */
+  .main{
+    margin-left:var(--sidebar-w);
+    padding:40px 48px 80px;
+    max-width:1100px;
+  }
+  .hero{
+    background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color:#fff;padding:48px 40px;border-radius:12px;margin-bottom:32px;
+    box-shadow:0 8px 32px rgba(2,136,209,.25);
+  }
+  .hero h1{font-size:32px;font-weight:900;letter-spacing:.02em;margin-bottom:10px;}
+  .hero p{font-size:14.5px;opacity:.95;line-height:1.8;}
+  .hero .meta{
+    margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.3);
+    font-size:12px;opacity:.85;
+  }
+
+  /* カテゴリ見出し */
+  .cat-section{margin-top:48px;scroll-margin-top:24px;}
+  .cat-section .cat-header{
+    background:var(--black);color:#fff;padding:16px 24px;border-radius:8px 8px 0 0;
+    display:flex;align-items:center;gap:14px;
+  }
+  .cat-section .cat-header .badge{
+    background:var(--primary);color:#fff;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;
+  }
+  .cat-section .cat-header h2{font-size:20px;font-weight:700;flex:1;}
+  .cat-section .cat-header .count{
+    background:rgba(255,255,255,.15);padding:4px 10px;border-radius:12px;
+    font-size:12px;font-weight:500;
+  }
+  .cat-section .cat-intro{
+    background:#fff;padding:14px 24px;font-size:13px;color:var(--text-soft);
+    border:1px solid var(--border);border-top:none;
+    border-radius:0 0 8px 8px;margin-bottom:20px;
+  }
+  .cat-section .cat-intro.warn{background:var(--warn-soft);border-left:4px solid var(--warn);}
+
+  /* プロンプトカード */
+  .card{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+    padding:24px 28px;margin-bottom:20px;
+    box-shadow:var(--shadow);transition:box-shadow .2s, transform .2s;
+    scroll-margin-top:24px;
+  }
+  .card:hover{box-shadow:var(--shadow-hover);}
+  .card .card-head{
+    display:flex;align-items:flex-start;gap:14px;margin-bottom:8px;
+  }
+  .card .card-num{
+    background:var(--primary);color:#fff;font-weight:900;font-family:var(--font-mono);
+    padding:4px 10px;border-radius:5px;font-size:13px;letter-spacing:.05em;
+    flex-shrink:0;
+  }
+  .card h3{
+    font-size:18px;font-weight:700;color:var(--black);line-height:1.5;
+    margin-top:2px;
+  }
+  .card .scene{
+    background:var(--primary-soft);color:var(--primary-dark);
+    padding:8px 14px;border-left:4px solid var(--primary-dark);
+    margin:10px 0 14px;font-size:13.5px;border-radius:0 4px 4px 0;
+  }
+  .card .scene::before{content:"📍 業務シーン：";font-weight:700;}
+
+  /* プロンプトブロック */
+  .prompt-box{position:relative;margin-top:6px;}
+  .prompt-box pre{
+    background:var(--code-bg);color:var(--code-text);
+    padding:20px 22px;border-radius:8px;
+    font-family:var(--font-mono);font-size:12.5px;line-height:1.7;
+    white-space:pre-wrap;word-break:break-word;
+    overflow-x:auto;max-height:600px;
+  }
+  .copy-btn{
+    position:absolute;top:10px;right:10px;
+    background:var(--primary);color:#fff;border:none;
+    padding:7px 14px;border-radius:5px;font-size:12px;cursor:pointer;
+    font-family:var(--font);font-weight:700;
+    transition:background .15s;
+    z-index:2;
+  }
+  .copy-btn:hover{background:var(--primary-dark);}
+  .copy-btn.copied{background:#28a745;}
+  .copy-btn.copied::after{content:" ✓";}
+
+  /* Tips */
+  .tips{
+    background:#fffbe6;border-left:4px solid var(--yellow);
+    padding:10px 16px;margin-top:14px;font-size:12.5px;color:var(--text);
+    border-radius:0 4px 4px 0;
+  }
+  .tips::before{content:"💡 ";font-size:14px;}
+  .tips strong{color:var(--primary);}
+
+  /* コンプライアンスバナー（最重要） */
+  .compliance-banner{
+    background:linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+    border:2px solid var(--warn);
+    border-radius:10px;
+    padding:20px 24px;
+    margin-bottom:24px;
+    box-shadow:0 4px 16px rgba(229,57,53,.15);
+  }
+  .compliance-banner .cb-title{
+    color:var(--warn);font-size:18px;font-weight:900;
+    display:flex;align-items:center;gap:8px;margin-bottom:10px;
+    letter-spacing:.02em;
+  }
+  .compliance-banner .cb-lead{
+    font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;
+  }
+  .compliance-banner .cb-rules{
+    background:#fff;padding:14px 18px;border-radius:6px;
+    border-left:4px solid var(--warn);
+  }
+  .compliance-banner .cb-rules ul{
+    list-style:none;padding:0;
+    display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;
+    font-size:12.5px;line-height:1.65;color:var(--text);
+  }
+  .compliance-banner .cb-rules ul li{padding-left:0;}
+  .compliance-banner .cb-rules ul li::before{
+    content:"✅ ";color:var(--warn);font-weight:900;
+  }
+  .compliance-banner .cb-rules ul li strong{color:var(--warn);}
+  .compliance-banner .cb-footer{
+    margin-top:10px;font-size:12px;color:var(--text-soft);
+  }
+  .compliance-banner .cb-footer a{
+    color:var(--warn);font-weight:700;border-bottom:1px dotted;
+  }
+  @media (max-width:900px){
+    .compliance-banner .cb-rules ul{grid-template-columns:1fr;}
+  }
+
+  /* カテゴリ冒頭の高リスク警告 */
+  .cat-warn{
+    background:var(--warn-soft);
+    border-left:4px solid var(--warn);
+    padding:8px 14px;font-size:12.5px;color:var(--text);
+    margin-top:-12px;margin-bottom:16px;border-radius:0 4px 4px 0;
+  }
+  .cat-warn strong{color:var(--warn);}
+
+  /* 添付方法ボックス */
+  .attach-guide{
+    background:var(--primary-soft);
+    border:1px solid var(--primary-mid);
+    border-radius:6px;
+    padding:12px 16px;
+    margin-top:12px;
+    font-size:12.5px;
+    line-height:1.7;
+    color:var(--text);
+  }
+  .attach-guide .ag-title{
+    font-weight:700;color:var(--primary-dark);font-size:13px;
+    margin-bottom:6px;display:flex;align-items:center;gap:4px;
+  }
+  .attach-guide ul{padding-left:18px;margin-top:4px;}
+  .attach-guide ul li{margin-bottom:2px;}
+  .attach-guide code{
+    background:#fff;padding:1px 6px;border-radius:3px;
+    font-family:var(--font-mono);font-size:11.5px;color:var(--primary-dark);
+    border:1px solid var(--border);
+  }
+
+  /* 安全活用セクション */
+  .safety-section{
+    background:#fff;border-radius:10px;padding:24px 28px;margin-top:32px;
+    border:1px solid var(--border);box-shadow:var(--shadow);
+    border-top:5px solid var(--warn);
+  }
+  .safety-section h2{
+    color:var(--warn);font-size:18px;margin-bottom:12px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .safety-section h3{
+    color:var(--primary-dark);font-size:15px;margin:18px 0 8px;
+    padding-bottom:4px;border-bottom:2px solid var(--primary-soft);
+  }
+  .safety-section ol{padding-left:22px;font-size:13px;line-height:1.85;color:var(--text);}
+  .safety-section .three-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px;}
+  .safety-section .tool{
+    background:#fafbfd;padding:14px 16px;border-radius:6px;
+    border-top:3px solid var(--primary);
+  }
+  .safety-section .tool h4{font-size:14px;color:var(--primary-dark);margin-bottom:8px;}
+  .safety-section .tool ol{font-size:12px;line-height:1.7;padding-left:18px;}
+  @media (max-width:900px){
+    .safety-section .three-tools{grid-template-columns:1fr;}
+  }
+
+  /* 使い方の基本 */
+  .basics{
+    background:#fff;border-radius:10px;padding:24px 28px;margin-bottom:32px;
+    border:1px solid var(--border);box-shadow:var(--shadow);
+  }
+  .basics h2{font-size:18px;color:var(--black);margin-bottom:14px;}
+  .basics .three-types{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;}
+  .basics .type-card{
+    background:#fafafa;padding:14px;border-radius:6px;border-top:3px solid var(--primary);
+  }
+  .basics .type-card h4{font-size:14px;color:var(--primary);margin-bottom:6px;}
+  .basics .type-card p{font-size:12px;color:var(--text);line-height:1.6;}
+
+  /* 巻末 */
+  .footer-block{
+    background:linear-gradient(135deg, #f5f5f5 0%, #ebebeb 100%);
+    padding:32px;border-radius:12px;margin-top:48px;
+  }
+  .footer-block h2{color:var(--primary);font-size:18px;margin-bottom:12px;}
+  .footer-block ul{padding-left:20px;font-size:13px;line-height:1.9;color:var(--text);}
+  .footer-block .rules{
+    background:#fff;padding:18px 22px;border-radius:8px;margin-top:16px;
+    border:1px solid var(--border);
+  }
+  .footer-block .rules h3{color:var(--primary);font-size:14px;margin-bottom:8px;}
+  .footer-block .meta-bottom{
+    margin-top:20px;padding-top:14px;border-top:1px solid #ccc;
+    font-size:11.5px;color:var(--text-soft);text-align:center;
+  }
+
+  /* レスポンシブ */
+  @media (max-width:900px){
+    .sidebar{
+      position:static;width:100%;border-right:none;border-bottom:1px solid var(--border);
+      max-height:60vh;
+    }
+    .main{margin-left:0;padding:24px 16px 48px;}
+    .hero{padding:32px 22px;}
+    .hero h1{font-size:24px;}
+    .basics .three-types{grid-template-columns:1fr;}
+  }
+
+  /* 印刷 */
+  @media print{
+    .sidebar,.copy-btn{display:none;}
+    .main{margin-left:0;padding:0;}
+    .card{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #888;}
+    body{background:#fff;}
+  }
+
+  /* 検索ヒット */
+  .card.hidden{display:none;}
+
+  /* TOPに戻るボタン */
+  .back-to-top{
+    position:fixed;
+    bottom:28px;
+    right:28px;
+    width:54px;
+    height:54px;
+    background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    font-size:22px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(2,136,209,.35);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(20px);
+    transition:opacity .25s, transform .25s, box-shadow .2s;
+    z-index:200;
+  }
+  .back-to-top.show{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+  .back-to-top:hover{
+    box-shadow:0 10px 28px rgba(2,136,209,.5);
+    transform:translateY(-2px);
+  }
+  .back-to-top .arrow{font-size:22px;line-height:1;}
+  .back-to-top .label{font-size:9px;letter-spacing:.05em;margin-top:1px;font-weight:500;}
+  @media (max-width:900px){
+    .back-to-top{bottom:18px;right:18px;width:48px;height:48px;}
+    .back-to-top .arrow{font-size:18px;}
+  }
+  @media print{
+    .back-to-top{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    経営指導員のための<br>プロンプト集
+    <small>NAWAGATE株式会社 / 2026.06</small>
+  </div>
+  <input type="search" class="search" id="searchBox" placeholder="🔍 補助金、メール、面談… で検索">
+
+  <div class="cat-group">
+    <div class="cat-title">A. 日常業務（簡易・5本）</div>
+    <ul class="cat-list">
+      <li><a href="#A1"><span class="code">A1</span>事業者への返信メール</a></li>
+      <li><a href="#A2"><span class="code">A2</span>講習会・相談会の告知文</a></li>
+      <li><a href="#A3"><span class="code">A3</span>補助金募集の会員向け案内</a></li>
+      <li><a href="#A4"><span class="code">A4</span>セミナー告知メール</a></li>
+      <li><a href="#A5"><span class="code">A5</span>議事録ドラフト</a></li>
+    </ul>
+  </div>
+  <div class="cat-group">
+    <div class="cat-title">B. 面談・ヒアリング（4本）</div>
+    <ul class="cat-list">
+      <li><a href="#B1"><span class="code">B1</span>事業者ヒアリングシート</a></li>
+      <li><a href="#B2"><span class="code">B2</span>面談メモ要点整理</a></li>
+      <li><a href="#B3"><span class="code">B3</span>音声録音→要点抽出</a></li>
+      <li><a href="#B4"><span class="code">B4</span>複数回面談の時系列整理</a></li>
+    </ul>
+  </div>
+  <div class="cat-group">
+    <div class="cat-title">C. 事業計画書・補助金（6本）⭐</div>
+    <ul class="cat-list">
+      <li><a href="#C1"><span class="code">C1</span>持続化補助金 23問Q&A</a></li>
+      <li><a href="#C2"><span class="code">C2</span>持続化補助金 様式2 たたき台</a></li>
+      <li><a href="#C3"><span class="code">C3</span>事業計画書の1次チェック</a></li>
+      <li><a href="#C4"><span class="code">C4</span>経営革新計画たたき台</a></li>
+      <li><a href="#C5"><span class="code">C5</span>SWOT分析（対話形式）</a></li>
+      <li><a href="#C6"><span class="code">C6</span>補助金実績報告書</a></li>
+    </ul>
+  </div>
+  <div class="cat-group">
+    <div class="cat-title">D. 市場・競合・データ分析（4本）</div>
+    <ul class="cat-list">
+      <li><a href="#D1"><span class="code">D1</span>業種別市場概況の整理</a></li>
+      <li><a href="#D2"><span class="code">D2</span>競合分析レポート（3C）</a></li>
+      <li><a href="#D3"><span class="code">D3</span>統計データの引用整理</a></li>
+      <li><a href="#D4"><span class="code">D4</span>レジデータから売上分析</a></li>
+    </ul>
+  </div>
+  <div class="cat-group">
+    <div class="cat-title">E. 販促物支援・伴走（3本）</div>
+    <ul class="cat-list">
+      <li><a href="#E1"><span class="code">E1</span>キャッチコピー（深津式）</a></li>
+      <li><a href="#E2"><span class="code">E2</span>Instagram投稿文</a></li>
+      <li><a href="#E3"><span class="code">E3</span>チラシ構成案</a></li>
+    </ul>
+  </div>
+  <div class="cat-group">
+    <div class="cat-title">F. 報告・記録・調査（3本）</div>
+    <ul class="cat-list">
+      <li><a href="#F1"><span class="code">F1</span>実施報告書ドラフト</a></li>
+      <li><a href="#F2"><span class="code">F2</span>新商品試食アンケート</a></li>
+      <li><a href="#F3"><span class="code">F3</span>事業者向け補助金募集案内</a></li>
+    </ul>
+  </div>
+  <div class="cat-group" style="border-top:1px dashed var(--border);padding-top:12px;">
+    <div class="cat-title" style="color:var(--warn);">🔒 安全活用ガイド</div>
+    <ul class="cat-list">
+      <li><a href="#safety" style="color:var(--warn);"><span class="code" style="color:var(--warn);">!</span>AI に学習させない設定</a></li>
+    </ul>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="hero">
+    <h1>経営指導員のためのプロンプト集</h1>
+    <p>商工会の経営指導員様、経営支援員様のために設計した、<br>業務直結の Gemini / ChatGPT / Claude プロンプト集 <strong>25本</strong>。</p>
+    <ul style="margin-top:18px;padding-left:22px;font-size:13.5px;line-height:1.9;opacity:.95;">
+      <li>📖 <strong>こんなプロンプトでこういう生成ができる</strong> という確認用です</li>
+      <li>✏️ そのまま使うのではなく、<strong>自分の業務にアレンジして</strong>使うのを推奨します</li>
+      <li>👤 最終的には <strong>人間が手を入れて完成させる</strong> ことを忘れないでください</li>
+    </ul>
+    <div class="meta">
+      作成：NAWAGATE株式会社　縄田 倫靖（2026年6月） ／ 25プロンプト・6カテゴリ
+    </div>
+  </div>
+
+  <!-- コンプライアンス第一バナー -->
+  <div class="compliance-banner">
+    <div class="cb-title">⚠️ コンプライアンス第一　— 商工会の守秘義務を最優先</div>
+    <p class="cb-lead">
+      事業者さんの大切な情報を扱うため、<strong>必ず以下を実施してから AI に投入</strong>してください。
+    </p>
+    <div class="cb-rules">
+      <ul>
+        <li><strong>事業者名</strong>　→　A社・B社・◯◯店 等の仮名に置換</li>
+        <li><strong>所在地</strong>　→　県名・市町村名のみ（番地まで書かない）</li>
+        <li><strong>代表者名</strong>　→　代表・店主 など役職表現に</li>
+        <li><strong>売上・利益</strong>　→　概算（500万円規模・前年比80% 等）</li>
+        <li><strong>取引先名</strong>　→　取引先A・取引先B 等の仮名に</li>
+        <li><strong>電話・メール</strong>　→　削除（AI に渡す必要なし）</li>
+        <li><strong>マイナンバー</strong>　→　絶対に入力しない</li>
+        <li><strong>口座情報</strong>　→　絶対に入力しない</li>
+      </ul>
+    </div>
+    <p class="cb-footer">
+      → 詳細・ツール別オプトアウト設定は <a href="#safety">🔒 安全活用ガイド（巻末）</a> を必ず読んでからご利用ください
+    </p>
+  </div>
+
+  <section class="basics">
+    <h2>📌 使い方の基本</h2>
+    <p style="font-size:13px;">プロンプトには <strong>3つの型</strong> があります。慣れる順に進めてください。</p>
+    <div class="three-types">
+      <div class="type-card">
+        <h4>① 簡易プロンプト</h4>
+        <p>「●●●を作って」＋条件を箇条書きするだけ。日常の小さな業務向け。</p>
+      </div>
+      <div class="type-card">
+        <h4>② 構造化プロンプト</h4>
+        <p>【役割】【指示】【条件】【形式】の4ブロックで書く。大きな業務向け。</p>
+      </div>
+      <div class="type-card">
+        <h4>③ メタプロンプト</h4>
+        <p>AI に「いいプロンプト」を作ってもらう。応用編。</p>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:12.5px;color:var(--text-soft);">
+      気に入ったプロンプトは <strong>Gemini の Gem</strong> に登録すれば、毎回コピペせずに呼び出せます。
+    </p>
+  </section>
+
+  <!-- ============== A. 日常業務 ============== -->
+  <section class="cat-section" id="cat-A">
+    <div class="cat-header">
+      <span class="badge">A</span>
+      <h2>日常業務（簡易プロンプト）</h2>
+      <span class="count">5本</span>
+    </div>
+    <div class="cat-intro">「●●●を作って」＋条件を箇条書きするだけの自然言語型。1〜3行で書けて、AIが200〜600字の自然な文章に整える。</div>
+
+    <article class="card" id="A1">
+      <div class="card-head"><span class="card-num">A1</span><h3>📧 事業者への返信メール</h3></div>
+      <div class="scene">補助金問合せに一次返信したい</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-A1">📋 コピー</button>
+<pre id="prompt-A1">事業者から「持続化補助金、創業1年目でも申請できますか？」と問合せが来ました。
+商工会の経営指導員として、お礼から始めて要件を簡潔に伝える返信メールを200字くらいで作って。
+署名は「◯◯商工会 経営指導員 ◯◯」で。</pre>
+      </div>
+      <div class="tips">問合せ本文をそのままコピペで貼り、シーンと条件を変えるだけで使い回せる。</div>
+    </article>
+
+    <article class="card" id="A2">
+      <div class="card-head"><span class="card-num">A2</span><h3>📋 講習会・相談会の告知文</h3></div>
+      <div class="scene">個別相談会の告知文を作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-A2">📋 コピー</button>
+<pre id="prompt-A2">6/15(土)14時から商工会館で「持続化補助金 個別相談会」をやります。
+経営指導員が無料で伴走支援することを伝える告知文を作って。
+親しみやすい敬語で、申込は電話。300字くらい。</pre>
+      </div>
+      <div class="tips">日時・会場・対象・特典を 1 行ずつ箇条書きで渡すと精度が上がる。</div>
+    </article>
+
+    <article class="card" id="A3">
+      <div class="card-head"><span class="card-num">A3</span><h3>📨 補助金募集の会員向け案内</h3></div>
+      <div class="scene">ものづくり補助金の公募開始を会員にメール案内</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-A3">📋 コピー</button>
+<pre id="prompt-A3">会員向けに「ものづくり補助金 第23次」の案内メールを作って。
+補助率1/2（小規模事業者2/3）・補助上限3,000万円（賃上げ特例適用時 最大4,000万円）・申請期限5/8。
+商工会で事業計画書策定相談が無料です。
+件名35字以内・本文600字くらいで。
+末尾に「採択を保証するものではありません」を入れて。</pre>
+      </div>
+      <div class="tips"><strong>採択保証 NG</strong> を必ず入れる。煽り表現（今すぐ・絶対）も避ける。</div>
+    </article>
+
+    <article class="card" id="A4">
+      <div class="card-head"><span class="card-num">A4</span><h3>📨 セミナー告知メール（事業者配信用）</h3></div>
+      <div class="scene">会員事業者向けにセミナー告知メールを配信</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-A4">📋 コピー</button>
+<pre id="prompt-A4">あなたは商工会のセミナー集客を担当する経営指導員です。
+以下の情報をもとに、会員事業者向けのセミナー告知メールを作って。
+
+【セミナー名】◯◯
+【開催日時】◯月◯日 ◯:◯〜
+【場所】◯◯（またはオンラインZoom）
+【対象】従業員10名以下の小規模事業者の経営者
+【参加費】無料／有料
+【定員】◯名
+【講師】◯◯
+【申込締切】◯月◯日
+【申込方法】URL／電話／FAX
+【セミナーで得られること】（3つ）
+
+【条件】
+・件名はセミナー名＋日付を含み30字以内
+・宛名「○○ご担当者様」（差し込み変数想定）
+・本文500〜700字
+・開催概要は箇条書き
+・CTAは1文で強調
+・末尾に問合せ先（電話／メール／担当者名）
+・煽り表現NG（今すぐ・絶対・必見）</pre>
+      </div>
+      <div class="tips"><strong>差し込み変数</strong>を使うと一括配信メールにも応用できる。「○○ご担当者様」を「{{name}}様」に変えるだけ。</div>
+    </article>
+
+    <article class="card" id="A5">
+      <div class="card-head"><span class="card-num">A5</span><h3>📝 議事録ドラフト</h3></div>
+      <div class="scene">所内会議・部会・支部会の議事録を作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-A5">📋 コピー</button>
+<pre id="prompt-A5">議事録を作成してください。以下の指示に従って出力してください。
+
+【会議の情報】
+・会議名：
+・日時：
+・場所：
+・参加者（敬称略）：
+・議題：
+
+【議事録に含める内容】
+1. 各議題の概要
+2. 各参加者の主な発言
+3. 出されたアイデア
+4. 決定事項（目立つように太字にする）
+5. ネクストアクション（担当者と期日を含める）
+
+【出力形式】
+・全体は見出し付きの構造化文書
+・「決定事項」と「ネクストアクション」は表形式
+・専門用語には簡単な説明を加える
+
+【文字起こし（または会議メモ）】
+（ここに貼り付け）</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>音声録音を渡す</strong>：iPhone は「ボイスメモ」→ 共有 → Google ドライブ → PC 版 Gemini で <code>＋</code> → Google ドライブから添付。Android は <strong>Google Recorder</strong> で自動文字起こし → コピペ。詳細は <a href="#B3">B3</a> 参照</li>
+          <li><strong>手書きメモを渡す</strong>：スマホで撮影 → Gemini で <code>＋</code> → 写真 → 添付（OCR で読み取り）</li>
+          <li><strong>テキストメモを渡す</strong>：そのままプロンプト末尾に貼り付け</li>
+        </ul>
+      </div>
+      <div class="tips"><strong>決定事項と Next Action を必ず表形式に</strong>するのがポイント。同僚でもそのまま回覧できる。</div>
+    </article>
+  </section>
+
+  <!-- ============== B. 面談・ヒアリング ============== -->
+  <section class="cat-section" id="cat-B">
+    <div class="cat-header">
+      <span class="badge">B</span>
+      <h2>面談・ヒアリング</h2>
+      <span class="count">4本</span>
+    </div>
+    <div class="cat-intro">事業者面談の前後に効く。記録の標準化・引継ぎ・属人化解消に直結。</div>
+    <div class="cat-warn"><strong>⚠️ 投入時の鉄則：</strong>事業者名・代表者名・取引先名は <strong>必ず仮名化</strong>／所在地は市町村まで／数値は概算で</div>
+
+    <article class="card" id="B1">
+      <div class="card-head"><span class="card-num">B1</span><h3>📋 事業者ヒアリングシート作成</h3></div>
+      <div class="scene">補助金申請相談の事前ヒアリングシートを作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-B1">📋 コピー</button>
+<pre id="prompt-B1">【役割】商工会の経営指導員
+【指示】持続化補助金の経営計画書作成のため、事業者から聞くべき情報を網羅した質問リストを作って
+【条件】
+・各項目を5問ずつ
+・選択肢付きで答えやすく
+・15分で終わる量
+・専門用語は避ける
+【形式】ヒアリングシート（A4 1枚・表形式）</pre>
+      </div>
+      <div class="tips">作ったシートはそのまま事業者にPDFで渡せる形に。</div>
+    </article>
+
+    <article class="card" id="B2">
+      <div class="card-head"><span class="card-num">B2</span><h3>📝 面談メモ要点整理（表形式）</h3></div>
+      <div class="scene">1時間の事業者面談メモを所内引継ぎ用に清書</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-B2">📋 コピー</button>
+<pre id="prompt-B2">あなたは中小企業支援機関の経営指導員のアシスタントです。
+以下の事業者面談メモを、同僚の経営指導員にそのまま引き継げる形に整理してください。
+
+# ⚠️ コンプライアンス・ルール（守秘義務）
+・事業者名は仮名（A社・B社 等）に置換してから投入
+・代表者氏名は「代表」「店主」等の役職表現に
+・所在地は市町村名まで（番地は不要）
+・売上・利益等の数値は概算（500万円規模 等）でOK
+
+# 出力形式
+| 項目 | 内容 |
+| 事業者名 | A社（仮名） |
+| 業種 |  |
+| 面談日／場所（市町村まで） |  |
+| 主訴（事業者が一番困っていること） |  |
+| 経営状況（売上・利益・従業員数で言及があった事実のみ／概算でOK） |  |
+| 既に取り組んでいる施策 |  |
+| 経営指導員として確認すべき追加情報 |  |
+| 次回までの宿題（事業者側／指導員側に分けて） |  |
+
+# 制約
+・メモに書かれていない事実は推測せず「情報なし」と書く
+・専門用語があれば（ ）内に平易な言い換えを付ける
+・固有名詞は仮名のまま使用
+
+# 面談メモ（投入前に必ず仮名化）
+（ここに走り書きを貼り付け／事業者名・代表名・取引先名は仮名に置換済みのもの）</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>走り書きメモを渡す</strong>：スマホで撮影 → Gemini で <code>＋</code> → 写真 → 添付（OCR で読み取り）</li>
+          <li><strong>音声録音を渡す</strong>：詳細は <a href="#B3">B3</a> 参照</li>
+          <li><strong>テキストメモを渡す</strong>：プロンプト末尾にそのまま貼り付け</li>
+        </ul>
+      </div>
+      <div class="tips">所内フォーマットがあれば「#出力形式」を所内書式に差し替えて使う。</div>
+    </article>
+
+    <article class="card" id="B3">
+      <div class="card-head"><span class="card-num">B3</span><h3>🎤 音声録音 → 要点抽出</h3></div>
+      <div class="scene">面談・会議をスマホで録音 → AI で議事録化</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-B3">📋 コピー</button>
+<pre id="prompt-B3">以下の会議内容を、①議題ごとの要約 ②決定事項 ③次回タスク の順に整理してください。
+
+#補足
+・話者が複数いる場合は、発言の方向性が分かるよう「事業者」「指導員」とラベルを付ける
+・専門用語には簡単な説明を加える
+・フィラー（えーと、あの、など）は除去する
+・聞き取れていない箇所（[不明]等）は無理に補完せず「[不明]」のまま残す
+
+#音声ファイル または 文字起こし
+（音声ファイルを添付、または文字起こしをここに貼り付け）</pre>
+      </div>
+
+      <div style="margin-top:14px;padding:14px 18px;background:var(--primary-soft);border-radius:6px;border:1px solid var(--primary-mid);">
+        <h4 style="font-size:14px;color:var(--primary-dark);margin-bottom:10px;">📱 音声データを Gemini に渡す3つの方法</h4>
+
+        <div style="margin-bottom:12px;">
+          <strong style="color:var(--primary-dark);font-size:13px;">方法1：iPhone（ボイスメモ → Gemini）</strong>
+          <ol style="padding-left:22px;font-size:12.5px;line-height:1.75;color:var(--text);margin-top:4px;">
+            <li>「ボイスメモ」アプリで面談を録音</li>
+            <li>録音を長押し →「共有」→「ファイルに保存」または「Google ドライブにアップロード」</li>
+            <li><strong>PC 版 Gemini</strong>（gemini.google.com）を開く</li>
+            <li>「＋」→「ファイル」または「Google ドライブ」から音声ファイル（.m4a）を選択</li>
+            <li>上記プロンプトを貼り付けて送信</li>
+          </ol>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <strong style="color:var(--primary-dark);font-size:13px;">方法2：Android（Pixel 端末の Google Recorder で自動文字起こし）★ 最強</strong>
+          <ol style="padding-left:22px;font-size:12.5px;line-height:1.75;color:var(--text);margin-top:4px;">
+            <li><strong>Google Recorder</strong>（<strong>Pixel 3 以降の Pixel スマホ／Pixel Tablet 限定</strong>）で録音</li>
+            <li>録音中・録音後に <strong>自動で文字起こし</strong>が生成される（日本語対応・Pixel 6 以降はオフライン高精度）</li>
+            <li>文字起こしテキストを長押し → コピー</li>
+            <li>Gemini アプリの入力欄に貼り付け → 上記プロンプトと一緒に送信</li>
+          </ol>
+          <p style="font-size:11.5px;color:var(--text-soft);margin-top:4px;padding-left:22px;">※ <strong>Pixel 以外の Android・iPhone は Google Recorder は使えません</strong>。標準レコーダーで録音 → 録音ファイル（.m4a／.mp3）を Google ドライブ経由で Gemini に渡してください。</p>
+        </div>
+
+        <div>
+          <strong style="color:var(--primary-dark);font-size:13px;">方法3：NotebookLM に直接投入（最強・両OS共通）</strong>
+          <ol style="padding-left:22px;font-size:12.5px;line-height:1.75;color:var(--text);margin-top:4px;">
+            <li><a href="https://notebooklm.google.com" target="_blank">NotebookLM</a>（無料）で新規ノートブック作成</li>
+            <li>音声ファイル（.m4a／.mp3）をドラッグ＆ドロップでソース追加</li>
+            <li>自動で文字起こし＋要約が作成される</li>
+            <li>ノートブック内で「要点を整理して」「決定事項とToDoを抽出して」と質問</li>
+          </ol>
+          <p style="font-size:11.5px;color:var(--text-soft);margin-top:4px;padding-left:22px;">★ 複数回の面談履歴を1つのノートに溜めて、横断質問できるのが強み。</p>
+        </div>
+      </div>
+
+      <div class="tips">機密度の高い面談は、<strong>個人情報・取引先名を録音時に避ける</strong>か、文字起こし後に匿名化（◯◯雑貨店／田中社長 → A 社／代表）してから AI に投入。</div>
+    </article>
+
+    <article class="card" id="B4">
+      <div class="card-head"><span class="card-num">B4</span><h3>📚 複数回面談履歴の時系列整理</h3></div>
+      <div class="scene">半年で3回面談した事業者の経緯を所内引継ぎ用に整理</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-B4">📋 コピー</button>
+<pre id="prompt-B4">あなたは中小企業支援機関の引き継ぎ資料を作成する書記です。
+同一事業者の複数回の面談メモを、時系列で整理し、変化・進捗・未解決事項を可視化してください。
+
+# ⚠️ コンプライアンス・ルール（守秘義務）
+・事業者名は仮名（A社等）／代表者は役職表現／所在地は市町村まで
+・売上等の数値は概算（500万円規模 等）
+・取引先名・支払先名も仮名に置換してから投入
+
+# 出力形式
+（1）事業者プロフィール（仮名・業種・市町村・規模／概算・主訴）
+（2）時系列サマリー（面談日／論点／合意事項／次回宿題 を表形式）
+（3）変化したこと（売上・体制・市況／概算で）
+（4）解決した課題 / 未解決のまま残っている課題
+（5）次の支援者への引き継ぎメモ（200字以内）
+
+# 制約
+・メモに無い情報を推測で補わない
+・数値は仮名化・概算化のうえで転記
+・「未解決」「保留」が複数回続いている論点は太字で示す
+
+# 面談メモ（投入前に必ず仮名化）
+〔1回目 YYYY-MM-DD〕
+（メモ貼り付け／A社・代表・取引先A 等の仮名で）
+
+〔2回目 YYYY-MM-DD〕
+（メモ貼り付け）
+
+〔3回目 YYYY-MM-DD〕
+（メモ貼り付け）</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>過去メモを一括投入</strong>：複数のテキスト／PDF／画像を <code>＋</code> から最大10ファイルまで同時添付</li>
+          <li><strong>NotebookLM がおすすめ</strong>：同じ事業者の面談履歴を1つのノートにまとめて入れる → 横断質問が可能</li>
+        </ul>
+      </div>
+      <div class="tips"><strong>異動・退職時の引継ぎに最強</strong>。属人化解消の決定打。</div>
+    </article>
+  </section>
+
+  <!-- ============== C. 事業計画書・補助金 ============== -->
+  <section class="cat-section" id="cat-C">
+    <div class="cat-header">
+      <span class="badge">C</span>
+      <h2>事業計画書・補助金 ⭐</h2>
+      <span class="count">6本（最厚パート）</span>
+    </div>
+    <div class="cat-intro">指導員業務の本丸。事業者が作る→指導員が AI で 1 次チェック→改善提案、の流れで使う。</div>
+    <div class="cat-warn"><strong>⚠️ 最重要カテゴリ：</strong>補助金書類は機密性が高い。事業者名・所在地・取引先・財務数値は <strong>絶対に仮名化・概算化</strong> してから投入。原本のままの投入は <strong>守秘義務違反</strong> の恐れ</div>
+
+    <article class="card" id="C1">
+      <div class="card-head"><span class="card-num">C1</span><h3>⭐ 持続化補助金 23問Q&A プロンプト</h3></div>
+      <div class="scene">事業者が AI で持続化補助金の計画書ドラフトを作る（指導員は 1 次チェック側）</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-C1">📋 コピー</button>
+<pre id="prompt-C1">あなたは「中小企業診断士・補助金審査員レベルのAIアドバイザー」です。
+これからユーザーと協力して、「小規模事業者持続化補助金」の
+【Ⅰ. 経営計画書】および【Ⅱ. 補助事業計画書】を一緒に作成していきます。
+
+# 🎯【目的】
+申請者の回答をもとに、AIが自動で4P／PSET／3C／SWOT分析を行い、
+論理的で説得力があり、採択率の高い計画書を作成します。
+
+# ⚙️【進行ルール】
+- 一問一答形式で進めます（次の質問は回答後に提示）。
+- 回答者は匿名（住所・企業名・氏名など不要）。
+- 回答は箇条書き・短文でOK。
+- 入力がない項目は「—」と入力（AIは補完しません）。
+- 文体は「です・ます調」。
+- 表と算式（顧客数×単価×購入頻度＝売上）を必ず明記。
+- Q15（補助事業タイトル）はAIが自動生成。
+
+# 🧾【Ⅰ. 経営計画パート】
+Q1. 業種（日本標準産業分類に準拠）
+Q2. 主な商品・サービス
+Q3. 顧客層
+Q4. 販売チャネル
+Q5. 過去3カ年の売上（万円）
+Q6. 利益率または利益額
+Q7. 顧客数（平均／月または年）
+Q8. 顧客単価
+Q9. 経営課題（外部・内部要因）
+Q10. 市場動向・顧客変化
+Q11. 自社の強み
+Q12. 弱み（改善すべき課題）
+Q13. 経営方針・方向性
+Q14. 数値目標（3年後・5年後）
+
+# 🧩【Ⅱ. 補助事業計画パート】
+Q15. 補助事業タイトル（AI自動生成）
+Q16. 補助事業の目的
+Q17. 具体的な取組内容（経費区分を併記）
+Q18. 創意工夫・独自性
+Q19. 実施スケジュール
+Q20. 補助金の使い道・予算配分（合計100％）
+Q21. 効果（顧客数×単価×購入頻度＝売上）
+Q22. 5カ年売上予測（表形式）
+Q23. 補助事業終了後の自走計画
+
+# 📊【AIの内部分析機能】
+4P／PSET／3C／SWOT を自動実行し、計画書本文に組み込む。
+一貫性チェック（課題→目標→取組→効果）を％で表示。
+
+# 🌟【開始メッセージ】
+「了解しました。
+ここから一問ずつ丁寧に整理していきましょう。
+協力して採択率の高い計画書を一緒に作成してまいりましょう！
+まずは Q1. 業種を教えてください。」</pre>
+      </div>
+      <div class="attach-guide" style="background:#fff8dc;border-color:#f4c430;">
+        <div class="ag-title" style="color:#a06a00;">📥 入力ガイドPDFをセットで使うと精度UP</div>
+        <p style="font-size:12.5px;margin-bottom:8px;">
+          <a href="経営・補助事業計画入力ガイド.pdf" download style="display:inline-block;background:var(--primary);color:#fff;padding:8px 16px;border-radius:5px;text-decoration:none;font-weight:700;font-size:13px;margin-top:4px;">📥 入力ガイドPDFをダウンロード</a>
+        </p>
+        <p style="font-size:12px;color:var(--text);line-height:1.7;">
+          上のプロンプトと一緒に <strong>このPDFを添付</strong>すると、AIの知識（経営計画の書き方・採択事例の構造・5カ年売上予測の作り方）が強化され、<strong>出力の文字数と内容の精度が大幅に向上</strong>します。
+        </p>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">🛠 改修・カスタマイズの方法</div>
+        <ul>
+          <li>このプロンプトは <strong>縄田がメタプロンプトで作成</strong>したものです（AIに「いいプロンプトを作って」と依頼して生成）</li>
+          <li>業種・地域・支援対象に合わせた改修は <strong>Canvas モード</strong>を使うとブロック単位で編集しやすい</li>
+          <li>使い方：Gemini で入力欄横の「Canvas」ボタンON → このプロンプトを貼り付け → 「Q◯を◯◯に変えて」と指示</li>
+        </ul>
+      </div>
+      <div class="tips"><strong>事業者本人が使う想定</strong>のプロンプト。指導員は出力された草案を <strong>1次チェック</strong>→改善点を伝える役割で使う。</div>
+    </article>
+
+    <article class="card" id="C2">
+      <div class="card-head"><span class="card-num">C2</span><h3>📄 持続化補助金 様式2 たたき台</h3></div>
+      <div class="scene">事業者ヒアリング後に経営計画書のドラフトを作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-C2">📋 コピー</button>
+<pre id="prompt-C2">あなたは小規模事業者持続化補助金の申請支援経験が豊富な中小企業診断士です。
+以下の事業者情報をもとに、様式2「経営計画書」のたたき台を作成してください。
+
+# ⚠️ コンプライアンス・ルール（事業者情報は必ず仮名化）
+
+#事業者情報（投入時は仮名・概算で）
+・事業者名：（仮名・例：A社）
+・業種（日本標準産業分類）：（例：飲食料品小売業）
+・所在地：（市町村まで・例：鹿児島市）
+・従業員数（うち常勤）：（例：4名）
+・直近3期の売上高（万円）：（概算・例：500・550・600）
+・直近3期の営業利益（万円）：（概算・例：30・35・40）
+・主な顧客層：（例：60代以上の地元住民）
+・現在の主な販路：（例：店頭中心／一部 EC）
+・経営者が感じている課題（自由記述）：
+・既に取り組んでいる強み／工夫：
+
+#出力構成（持続化補助金 様式2に準拠）
+1. 企業概要
+2. 顧客ニーズと市場の動向
+3. 自社や自社の提供する商品・サービスの強み
+4. 経営方針・目標と今後のプラン
+
+#文字数の目安
+・各セクション 500〜800字、全体で3,000〜4,000字程度
+
+#文体
+・小規模事業者の経営者本人が書いた一人称（弊社／当店）の文体
+・抽象的な決まり文句を避け、上記の事業者情報の具体的事実に必ず触れる
+・数値は概算でも違和感が出ないよう「約500万円」のように表現
+・情報が無い箇所は「（後日確認）」と明記する</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>ヒアリングシート（B1）の回答を渡す</strong>：Word／PDF／画像で <code>＋</code> から添付</li>
+          <li><strong>公募要領も併せて添付</strong>：年度ごとの最新要領 PDF を <code>＋</code> → Google ドライブで投入</li>
+          <li><strong>過去の採択計画書（公開分）</strong>を添付すると、文体・粒度の精度が上がる</li>
+        </ul>
+      </div>
+      <div class="tips">年度ごとに様式が変わるので、最新公募要領を<strong>必ず原本確認</strong>。</div>
+    </article>
+
+    <article class="card" id="C3">
+      <div class="card-head"><span class="card-num">C3</span><h3>🔍 事業計画書の1次チェック（弱点分析）</h3></div>
+      <div class="scene">事業者が持ち込んだ事業計画書ドラフトを審査側視点でチェック</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-C3">📋 コピー</button>
+<pre id="prompt-C3">あなたは政府系金融機関の融資審査経験が10年以上ある中小企業診断士です。
+以下の事業計画書ドラフトを読み、審査側の視点で「不足している論点」「裏付けが弱い箇所」「数値の整合性が取れていない箇所」を指摘してください。
+
+# ⚠️ コンプライアンス・ルール
+事業者名・代表名・所在地（番地）・取引先名は仮名化したドラフトを使用してください。
+
+#出力形式
+1. 計画全体の評価（5段階／理由）
+2. 強く書けている箇所（3つ）
+3. 不足している論点（5つ／各論点に「なぜ必要か」を1〜2行で添える）
+4. 数値の整合性チェック結果（売上計画／費用／回収期間）
+5. 修正の優先順位（高／中／低 でマーク）
+
+#制約
+・指摘は具体的な該当箇所を引用しながら行う
+・「もっと頑張って」のような抽象的指摘は禁止
+・最終判断は経営者に委ねる姿勢で書く
+
+#計画書ドラフト（投入前に必ず仮名化）
+（ここに貼り付け／事業者名は A社・所在地は市町村・取引先は仮名 に置換済みのもの）</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>事業計画書ドラフトを渡す</strong>：Word／PDF を Gemini の <code>＋</code> → ファイル または Google ドライブから添付</li>
+          <li><strong>紙の計画書を渡す</strong>：スマホで撮影 → 写真添付（複数枚 OK・OCR で読み取り）</li>
+          <li><strong>公募要領も一緒に投入</strong>：公募要領 PDF も添付すると、要件適合チェックの精度が上がる</li>
+        </ul>
+      </div>
+      <div class="tips">指導員業務の本丸「<strong>事業者の提出物の 1 次チェック</strong>」に直結。</div>
+    </article>
+
+    <article class="card" id="C4">
+      <div class="card-head"><span class="card-num">C4</span><h3>🚀 経営革新計画のたたき台</h3></div>
+      <div class="scene">事業者の経営革新計画承認申請を準備</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-C4">📋 コピー</button>
+<pre id="prompt-C4">あなたは経営革新等支援機関で5年以上、経営革新計画の承認実績を持つ中小企業診断士です。
+以下の情報をもとに、経営革新計画承認申請書のたたき台を作成してください。
+
+# ⚠️ コンプライアンス・ルール（事業者情報は必ず仮名化）
+
+#事業者情報（投入時は仮名・概算で）
+・事業者名：（仮名・例：A社）
+・業種：（例：食品製造業）
+・既存事業の内容と直近の売上：（概算・例：「黒糖加工品の製造・販売／直近売上 約500万円」）
+・新たに取り組む事業活動（5類型のうち該当）：
+   1. 新商品の開発又は生産
+   2. 新役務の開発又は提供
+   3. 商品の新たな生産又は販売の方式の導入
+   4. 役務の新たな提供の方式の導入
+   5. 技術に関する研究開発及びその成果の利用その他の新たな事業活動
+・新事業の概要（200字程度）：
+・3年後／5年後の目標売上：（概算・例：800万円／1,200万円）
+
+#出力構成
+（1）新事業活動の内容（新規性の根拠を含む）
+（2）実施スケジュール（年度ごと）
+（3）経営の相当程度の向上を示す指標（中小企業等経営強化法・2020年10月改正後の基準）
+   - 付加価値額／一人当たり付加価値額の年率3%以上向上の見込み根拠
+     （3年計画9%以上／4年計画12%以上／5年計画15%以上）
+   - 給与支給総額の年率1.5%以上向上の見込み根拠
+     （3年計画4.5%以上／4年計画6%以上／5年計画7.5%以上）
+（4）資金計画（必要資金と調達方法）
+（5）想定リスクと対応策
+
+#制約
+・「新規性」は同業他社との対比で具体的に書く
+・指標の数値は事業者情報から逆算可能な範囲のみ。情報不足は「（要協議）」と明記</pre>
+      </div>
+      <div class="tips">都道府県で様式が異なるため必ず原本確認。鹿児島県は「商工労働水産部」所管。</div>
+    </article>
+
+    <article class="card" id="C5">
+      <div class="card-head"><span class="card-num">C5</span><h3>📊 SWOT分析（対話形式）</h3></div>
+      <div class="scene">事業計画書作成の事前ワーク。事業者と一緒に SWOT を引き出す</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-C5">📋 コピー</button>
+<pre id="prompt-C5">あなたは優秀な経営コンサルタントです。
+以下の企業のSWOT分析を行なってください。
+不足している情報があれば、私に質問してください。質問は1回につき3つまでにまとめてください。
+
+# ⚠️ コンプライアンス・ルール（事業者情報は必ず仮名化）
+
+#企業情報（投入時は仮名・概算で）
+・会社名：（仮名・例：A社）
+・業種：（例：和菓子製造小売）
+・主要商品／サービス：
+・売上規模：（概算・例：年商500万円規模）
+・従業員数：（例：4名）
+・営業地域：（市町村まで・例：鹿児島県内）
+・主要顧客層：
+・主な競合：（仮名 or 業種で・例：「同業の老舗B店」「コンビニ系スイーツ」）
+
+#出力形式
+1. Strength（強み）：5つまで／根拠を1行で添える
+2. Weakness（弱み）：5つまで／根拠を1行で添える
+3. Opportunity（機会）：5つまで／市場・社会のどの動きと結びつくか明記
+4. Threat（脅威）：5つまで／時間軸（短期／中長期）を明記
+5. クロスSWOT（強み×機会の積極戦略を3案）</pre>
+      </div>
+      <div class="tips">対話形式で AI から質問が来るので、<strong>事業者と一緒に画面を見ながら</strong>答えていくと深い分析になる。</div>    </article>
+
+    <article class="card" id="C6">
+      <div class="card-head"><span class="card-num">C6</span><h3>📑 補助金実績報告書ドラフト</h3></div>
+      <div class="scene">採択された補助事業の実績報告書（様式第8号）を作成</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-C6">📋 コピー</button>
+<pre id="prompt-C6">あなたは小規模事業者持続化補助金の実績報告書作成を年20件以上支援している中小企業診断士です。
+以下の情報をもとに、実績報告書（様式第8号）の本文ドラフトを作成してください。
+
+# ⚠️ コンプライアンス・ルール（事業者・支払先は仮名化／金額は概算で）
+
+#補助事業情報（投入時は仮名・概算で）
+・事業者名：（仮名・例：A社）
+・補助事業名：
+・補助事業期間：（例：2025年4月〜2026年3月）
+・採択時の補助事業計画（要点）：
+・実際に取り組んだ内容（時系列）：
+・購入した設備・サービスの一覧（金額／支払先）：（支払先は仮名・例「機械商社B」、金額は概算）
+・補助事業終了時点での効果（数値があれば数値で／概算でOK）：
+・想定との差異（良い差異／悪い差異）：
+
+#出力構成
+1. 補助事業の概要
+2. 実施内容（採択時計画との対応関係を明示）
+3. 実施スケジュール（計画 vs 実績の対比）
+4. 実施した経費と支出明細の要約
+5. 補助事業の効果（売上／顧客数／作業時間 等を計画値・実績値で対比）
+6. 計画との差異についての説明
+7. 今後の事業継続方針
+
+#制約
+・領収書や発注書で確認できない経費は記載しない
+・計画値からの乖離は隠さず、原因と対応策をセットで書く
+・数値は四捨五入の基準を明記（円単位 等）</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>採択時の事業計画書</strong>を <code>＋</code> → ファイル または Google ドライブから添付</li>
+          <li><strong>領収書・発注書</strong>はスマホで撮影 → 写真として複数枚添付（OCR で読み取り）</li>
+          <li><strong>実施記録・写真</strong>も併せて投入すると報告書の説得力UP</li>
+        </ul>
+      </div>
+      <div class="tips">領収書突合のチェックも事前に AI に依頼すると漏れ防止。</div>
+    </article>
+  </section>
+
+  <!-- ============== D. 市場・競合 ============== -->
+  <section class="cat-section" id="cat-D">
+    <div class="cat-header">
+      <span class="badge">D</span>
+      <h2>市場・競合・データ分析</h2>
+      <span class="count">4本</span>
+    </div>
+    <div class="cat-intro">事業計画書の根拠データ作成や、事業者の現状分析に。ハルシネーション対策を必ず入れる。</div>
+    <div class="cat-warn"><strong>⚠️ 投入時の鉄則：</strong>レジ／POS データに含まれる <strong>顧客名・電話番号・カード情報は必ず削除</strong>／自社売上は概算化（500万円規模 等）</div>
+
+    <article class="card" id="D1">
+      <div class="card-head"><span class="card-num">D1</span><h3>📈 業種別市場概況の整理</h3></div>
+      <div class="scene">事業計画書の「市場の動向」セクション作成支援</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-D1">📋 コピー</button>
+<pre id="prompt-D1">あなたは産業調査会社のシニアアナリストです。
+以下の業界について、中小企業の事業計画書「市場の動向」セクションのたたき台として整理してください。
+
+#調査対象
+・業界：（例：鹿児島県内の鶏料理専門店）
+・地域：
+・時間軸：直近5年の動向と、今後3年の見通し
+
+#出力形式
+1. 市場規模の概況（金額／事業所数／従業者数）
+   - 数値を出す場合は出典（経済センサス／業界団体統計／白書 等）を必ず明記
+   - 出典が不確かな数値は「（要一次情報確認）」と明記する
+2. 主な需要要因／需要減退要因
+3. 直近5年の主要トピック（法改正・新規参入・代替サービス）
+4. 中小事業者にとっての機会と脅威
+5. 参考にすべき公的統計／白書のリスト
+
+#絶対ルール
+・存在しない統計や架空の数値を作らない
+・記憶があやふやな情報は「要確認」とラベルする
+・URLを出す場合は、知っているドメイン（e-Stat、経産省、中小企業庁、業界団体公式）に限る</pre>
+      </div>
+      <div class="tips"><strong>ハルシネーション対策の指示は必須</strong>。</div>
+    </article>
+
+    <article class="card" id="D2">
+      <div class="card-head"><span class="card-num">D2</span><h3>🎯 競合分析レポート（3C分析）</h3></div>
+      <div class="scene">事業者の主要競合を 3C 観点で分析</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-D2">📋 コピー</button>
+<pre id="prompt-D2">あなたは中小企業の競合分析を専門にするコンサルタントです。
+以下の事業者にとっての主要競合3社を分析し、3C（Customer／Competitor／Company）の観点で整理してください。
+
+# ⚠️ コンプライアンス・ルール（事業者・競合は仮名化／売上は概算で）
+
+#自社情報（投入時は仮名・概算で）
+・事業者名：（仮名・例：A社）
+・業種：
+・所在地（市町村まで）：
+・主要商品／サービス：
+・売上規模：（概算・例：年商500万円規模）
+・強みとして自覚していること：
+
+#競合3社（事業者からの情報・仮名で）
+1社目：（例：同業の老舗B店）
+2社目：（例：チェーン店C）
+3社目：（例：通販事業者D）
+
+#出力形式
+A. 顧客（Customer）：ターゲット顧客の特徴／不満／未充足ニーズ
+B. 競合（Competitor）：3社それぞれの提供価値／価格帯／販路／推定強み／推定弱み
+   - 出典・公開情報のURLを併記（不明な場合は「公開情報なし」と明記）
+C. 自社（Company）：競合と比較した相対的な強み3つと弱み3つ
+D. 上記から導かれる、自社が攻めるべき空白領域（仮説3つ）
+
+#制約
+・「業界1位」のような断定は、公式発表が確認できない限り使わない
+・推定の箇所はすべて「（推定）」と明記する</pre>
+      </div>
+      <div class="tips">競合のWebサイトを別途精読してから貼ると精度UP。</div>
+    </article>
+
+    <article class="card" id="D3">
+      <div class="card-head"><span class="card-num">D3</span><h3>📊 統計データの引用整理</h3></div>
+      <div class="scene">補助金申請書の根拠データを整形</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-D3">📋 コピー</button>
+<pre id="prompt-D3">あなたは政策統計データの読み解きを得意とするデータジャーナリストです。
+以下の統計データを、事業計画書に引用できる形に整形してください。
+
+#統計データ（事業者または指導員が貼り付け）
+・出典名（白書名・統計名）：
+・発表元（省庁・自治体）：
+・公表年月：
+・データ本体（数値・表）：
+
+#出力形式
+1. データの要点（200字以内／中学生にも分かる言葉で）
+2. 事業計画書本文に引用できる文章（200〜300字／文末に出典名を必ず付ける）
+3. このデータから派生して確認すべき関連統計（リスト3つ）
+4. このデータの注意点（サンプルの偏り／調査年度の古さ等）
+
+#絶対ルール
+・元データに無い数値を新たに生み出さない
+・パーセンテージは元データから自分で計算できる場合のみ提示。それ以外は「未計算」とする</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>統計 PDF を渡す</strong>：e-Stat や経産省サイトから DL した PDF を <code>＋</code> → ファイルから添付</li>
+          <li><strong>長文 PDF は NotebookLM へ</strong>：複数年度・複数省庁の資料を1ノートに集約 → 横断質問可</li>
+          <li><strong>Excel データ</strong>もそのまま添付OK（数値の自動計算もしてくれる）</li>
+        </ul>
+      </div>
+      <div class="tips">e-Stat・経産省・中小企業庁の公式資料 PDF を <strong>NotebookLM</strong> に投入してから質問するとさらに精度UP。</div>
+    </article>
+
+    <article class="card" id="D4">
+      <div class="card-head"><span class="card-num">D4</span><h3>💹 レジデータから売上分析</h3></div>
+      <div class="scene">事業者の POS データから売上を多角的に分析</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-D4">📋 コピー</button>
+<pre id="prompt-D4">【役割】POSデータ分析のプロ／中小企業診断士
+【指示】事業者のレジデータ（POS）から売上を多角的に分析し、売れ筋と次の打ち手を提案して
+【条件】
+・商品別ランキング／時間帯／曜日／前年比／顧客単価
+・季節要因も考慮
+・推測箇所は明記
+【形式】分析レポート＋売れ筋ベスト10＋次の打ち手3案
+
+#データ
+（CSV または貼り付け）</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>POS/レジの CSV を渡す</strong>：CSV／Excel を Gemini の <code>＋</code> → ファイル から添付（最大100MB）</li>
+          <li><strong>Excel が大きい場合</strong>：Google ドライブにアップ → <code>＋</code> → Google ドライブ</li>
+          <li><strong>匿名化必須</strong>：顧客名・電話番号・カード情報は<strong>必ず削除</strong>してから投入。商品名・金額・日時のみ残す</li>
+        </ul>
+      </div>
+      <div class="tips">CSV を直接添付すると AI が表計算もしてくれる。<strong>匿名化は必須</strong>（氏名・電話番号は削除してから投入）。</div>
+    </article>
+  </section>
+
+  <!-- ============== E. 販促物支援 ============== -->
+  <section class="cat-section" id="cat-E">
+    <div class="cat-header">
+      <span class="badge">E</span>
+      <h2>販促物支援 — 事業者と伴走</h2>
+      <span class="count">3本</span>
+    </div>
+    <div class="cat-intro warn">⚠️ このカテゴリは「指導員が代筆する」のではなく、<strong>事業者の横で一緒に画面を見ながら使う</strong>題材として位置づけてください。最終アウトプットは事業者本人の言葉で仕上げます。</div>
+
+    <article class="card" id="E1">
+      <div class="card-head"><span class="card-num">E1</span><h3>✍️ 業種別キャッチコピー（深津式）</h3></div>
+      <div class="scene">事業者と一緒にチラシ・LP のキャッチコピーを案出し</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-E1">📋 コピー</button>
+<pre id="prompt-E1"># 命令書
+あなたはプロのキャッチコピーライターです。
+以下の制約条件を守って、商品情報を参考にキャッチコピーの案を10個、提案してください。
+
+# 制約条件
+・1つのキャッチコピーの文字数は15文字以内
+・簡潔で分かりやすい
+・専門用語は使わない
+・上から購買意欲を刺激する順に並べる
+・最後に各案の「狙っている感情（安心・興奮・お得感・誇り 等）」を1語で添える
+
+# 商品情報
+・店名／商品名：
+・業種（例：鹿児島市の鶏肉専門店）：
+・商品の特徴（3つまで）：
+・ターゲット顧客：
+・他店との一番の違い：
+
+# 出力文</pre>
+      </div>
+      <div class="tips">10案出して、<strong>事業者と一緒に「どれが好み？」</strong>を対話して絞り込む。</div>    </article>
+
+    <article class="card" id="E2">
+      <div class="card-head"><span class="card-num">E2</span><h3>📱 Instagram投稿文（事業者伴走）</h3></div>
+      <div class="scene">事業者と一緒に SNS 投稿文を作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-E2">📋 コピー</button>
+<pre id="prompt-E2">私は鹿児島県〇〇市で〔業態：例 カフェ／居酒屋／和菓子店〕を営んでいます。
+今週のおすすめメニューをInstagramに投稿する手伝いを頼みたいです。
+
+#盛り込みたい用件
+・商品名：
+・価格（税込）：
+・提供期間：
+・こだわり（地元食材／製法／調理時間など）：
+・店舗の予約方法：
+
+#出力ルール
+・一文は適度に改行を入れる
+・本文は300字以内
+・絵文字を3〜5個、文中に自然に入れる
+・末尾にハッシュタグを20〜25個生成する
+   - ビッグ（投稿10万件以上）／ミドル（1万〜10万件）／スモール（1,000〜1万件）の3層に分けて並べる
+   - エリア×メニュー（例：#鹿児島ランチ）、店名独自タグ も入れる
+・最後に投稿のベストタイミング（曜日・時間帯）の提案を1行で添える</pre>
+      </div>
+      <div class="tips">事業者の口調・人柄が出るよう、生成後に <strong>必ず事業者本人に読んでもらう</strong>。</div>
+    </article>
+
+    <article class="card" id="E3">
+      <div class="card-head"><span class="card-num">E3</span><h3>📄 チラシ構成案</h3></div>
+      <div class="scene">事業者のオープン記念チラシ／キャンペーンチラシの構成を一緒に作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-E3">📋 コピー</button>
+<pre id="prompt-E3">あなたはローカル店舗の販促経験が豊富なグラフィックデザイナー兼コピーライターです。
+A4片面チラシの構成案を作成してください。デザイナーが作業に入れるレベルの指示書にしてください。
+
+#店舗情報
+・業種：
+・所在地（市町村）：
+・ターゲット層（年齢・性別・利用シーン）：
+・伝えたい一番のメッセージ：
+・キャンペーン内容と期限：
+・予約方法（電話／LINE／Web）：
+
+#出力形式
+1. キャッチコピー案（3案）
+2. サブコピー案（3案）
+3. レイアウト（上から順に各エリアの内容と推奨サイズ）
+   - ヘッダー
+   - メイン写真
+   - サービス／メニュー紹介
+   - お客様の声 or Before/After
+   - 営業時間／アクセス／地図
+   - 予約方法／QRコード
+   - 来店特典クーポン
+4. 色使い（メイン／アクセント／背景）
+5. フォントの指針（見出し／本文）
+6. 注意書き（薬機法・景品表示法に触れる可能性のある表現があれば指摘）</pre>
+      </div>
+      <div class="tips">「薬機法・景表法」の指摘を入れると指導員側の安心感UP。</div>
+    </article>
+  </section>
+
+  <!-- ============== F. 報告・記録・調査 ============== -->
+  <section class="cat-section" id="cat-F">
+    <div class="cat-header">
+      <span class="badge">F</span>
+      <h2>報告・記録・調査</h2>
+      <span class="count">3本</span>
+    </div>
+    <div class="cat-intro">セミナー後の報告書、アンケート、補助金募集案内など、商工会の定型業務に直結。</div>
+
+    <article class="card" id="F1">
+      <div class="card-head"><span class="card-num">F1</span><h3>📊 実施報告書ドラフト</h3></div>
+      <div class="scene">セミナー・相談会終了後、所内回覧用の実施報告書を作る</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-F1">📋 コピー</button>
+<pre id="prompt-F1">あなたは商工会の経営指導員のアシスタントです。
+以下のセミナー実施情報をもとに、所内回覧用の実施報告書ドラフトを作成してください。
+
+# ⚠️ コンプライアンス・ルール（自由記述から個人特定情報を削除してから投入）
+
+#セミナー情報
+・名称：
+・主催／共催：
+・日時：
+・場所：
+・対象：
+・申込者数：
+・実参加者数：
+・講師名と所属：（外部講師は事前同意があれば実名OK／無ければ「外部講師」）
+・テーマ：
+・プログラム（時間別）：
+・配布資料：
+
+#参加者アンケート結果（投入前に個人特定情報を削除）
+・回収数 / 配布数：
+・満足度（5段階の分布）：
+・自由記述抜粋：（事業者名・氏名・電話番号は伏字／A社「◯◯が分かりやすかった」のように）
+
+#出力構成
+1. 開催概要（事実情報のみ）
+2. プログラム概要
+3. 参加者の反応（アンケート結果の客観要約）
+4. 当日の運営面で発生した事項
+5. 次回開催に向けた改善点（事実から導けるもののみ）
+6. 添付資料一覧
+
+#文体
+・敬体（です・ます調）
+・主観表現（「大変好評でした」等）は避け、数値や具体的発言を引用する形にする</pre>
+      </div>
+      <div class="attach-guide">
+        <div class="ag-title">📎 添付方法</div>
+        <ul>
+          <li><strong>アンケート結果を渡す</strong>：Excel/CSV を <code>＋</code> → ファイル から添付（個人特定情報は削除）</li>
+          <li><strong>当日メモを渡す</strong>：スマホ撮影 or 文字起こしテキストを添付・貼付</li>
+          <li><strong>配布資料も併せて</strong>：当日使ったレジュメ PDF も添付すると「プログラム概要」が自動で書ける</li>
+        </ul>
+      </div>
+      <div class="tips">「主観表現NG」を入れると<strong>後輩でも書けるレベル</strong>になる。</div>
+    </article>
+
+    <article class="card" id="F2">
+      <div class="card-head"><span class="card-num">F2</span><h3>📝 新商品試食アンケート項目</h3></div>
+      <div class="scene">事業者の新商品試食アンケート項目を作る（Googleフォーム転記用）</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-F2">📋 コピー</button>
+<pre id="prompt-F2">【役割】アンケート設計のプロ
+【指示】事業者の新商品試食アンケートの項目を作って
+
+【商品情報】
+・商品名：
+・商品カテゴリ：（菓子／飲料／加工品 等）
+・想定価格帯：
+・ターゲット層：
+
+【条件】
+・質問6〜8問／回答時間3分以内
+・購買意向（5段階）／改善点（自由記述）／属性（年代・性別・居住地）
+・選択肢付きで答えやすく
+
+【形式】質問項目リスト＋選択肢（Googleフォームに転記しやすい形）</pre>
+      </div>
+      <div class="tips">Googleフォームへの転記は、「項目をそのまま貼ってフォーム作成」で実用上は十分。</div>
+    </article>
+
+    <article class="card" id="F3">
+      <div class="card-head"><span class="card-num">F3</span><h3>📣 事業者向け補助金募集案内</h3></div>
+      <div class="scene">新年度の補助金募集を会員にメール案内（構造化版）</div>
+      <div class="prompt-box">
+        <button class="copy-btn" data-target="prompt-F3">📋 コピー</button>
+<pre id="prompt-F3">あなたは商工会で補助金申請支援を担当する経営指導員です。
+以下の補助金について、会員事業者にメールで案内する文章を作成してください。
+
+#補助金情報
+・補助金名（正式名称）：
+・公募元（中小企業庁／自治体／公社 等）：
+・公募期間：
+・補助上限額／補助率：
+・対象者の要件：
+・対象経費の例：
+・申請に必要な書類：
+・商工会としての支援内容（事業計画書作成相談／申請書チェック）：
+
+#出力構成
+1. 件名（補助金名と締切が一目で分かる、35字以内）
+2. 本文
+   (a) 補助金の概要を3行で
+   (b) 「こんな事業者におすすめ」を箇条書き3項目
+   (c) 補助率・上限額・公募期間の明示
+   (d) 商工会で受けられる支援（無料）の案内
+   (e) 申込・問合せ先
+3. 末尾の注意書き（「最終的な申請可否は事業者ご自身でご判断ください」「公募要領の最新版を必ずご確認ください」）
+
+#絶対ルール
+・「採択保証」のような表現は使わない
+・補助率や上限額は事業者から提供された情報以外を勝手に書かない</pre>
+      </div>
+      <div class="tips">A3 と F3 は似ていますが、A3 は簡易版、F3 は構造化版（件名＋本文＋注意書き）。</div>
+    </article>
+  </section>
+
+  <!-- ========== 安全活用ガイド ========== -->
+  <section class="safety-section" id="safety">
+    <h2>🔒 AI に学習させない安全活用ガイド</h2>
+    <p style="font-size:13.5px;line-height:1.85;color:var(--text);">
+      無料版 AI の多くは <strong>会話が学習に使われる設定が初期値</strong> です。事業者の機密情報を扱う指導員業務では、<strong>必ずオプトアウト設定</strong>をしてから使ってください。
+    </p>
+
+    <h3>① ツール別オプトアウト設定</h3>
+    <div class="three-tools">
+      <div class="tool">
+        <h4>🟦 Gemini（Google）</h4>
+        <ol>
+          <li>Gemini アプリ右上アイコン → <strong>「Keep Activity」</strong>（旧 Gemini アプリ アクティビティ）</li>
+          <li>「Keep Activity」を <strong>オフ</strong></li>
+          <li>または <strong>Temporary Chat（一時チャット）</strong> を使う（最大72時間保持・学習対象外）</li>
+        </ol>
+        <p style="font-size:11.5px;color:var(--text-soft);margin-top:6px;">※ オフでも最大72時間は処理用に保存／人間レビュー済みは最大3年保持される場合あり。<br>
+        ※ 有料プラン名は <strong>Google AI Pro</strong>（旧 Gemini Advanced・2025年5月改称）／AI Plus／AI Ultra。</p>
+      </div>
+      <div class="tool">
+        <h4>🟩 ChatGPT（OpenAI）</h4>
+        <ol>
+          <li>左下のアカウント名 → <strong>設定</strong></li>
+          <li><strong>データコントロール</strong> を選択</li>
+          <li>「すべての人のためにモデルを改善する」を <strong>オフ</strong></li>
+          <li>または <strong>Temporary Chat（一時チャット）</strong> を使う（最大30日保持・学習対象外）</li>
+        </ol>
+        <p style="font-size:11.5px;color:var(--text-soft);margin-top:6px;">※ <strong>Business／Enterprise／Edu／API は学習対象外がデフォルト</strong>（契約で保護）。Free・Plus・Pro は要オプトアウト操作。</p>
+      </div>
+      <div class="tool">
+        <h4>🟪 Claude（Anthropic）</h4>
+        <ol>
+          <li>Claude.ai 右下のアカウント → <strong>設定</strong></li>
+          <li>「Privacy」または「Data &amp; Privacy」</li>
+          <li>「Help improve Claude」を <strong>オフ</strong>（重要）</li>
+        </ol>
+        <p style="font-size:11.5px;color:var(--warn);margin-top:6px;font-weight:700;">⚠️ 2025年10月以降の重要変更：規約改訂により、新規・既存ユーザーとも<strong>初期値オン</strong>で表示されるUIに。能動的にオフにしてください。<br>
+        On=最大5年保持／Off=30日保持。<strong>For Work（Team/Enterprise）は学習対象外がデフォルト</strong>。</p>
+      </div>
+    </div>
+
+    <h3>② 学習対象にならない使い方のコツ</h3>
+    <ol>
+      <li><strong>機密情報は事前に匿名化</strong>：事業者名・所在地・氏名・電話番号・財務数値の固有値は「A 社」「代表」「◯◯円」に置換</li>
+      <li><strong>一時チャット／プライベートウィンドウ</strong>を活用：履歴を残したくないときは Gemini の一時チャットを使う</li>
+      <li><strong>NotebookLM を活用</strong>：投入した資料は<strong>学習には使われない</strong>（プライバシー保護がデフォルト）。複数資料の横断質問にも最適</li>
+      <li><strong>有料プラン／Workspace 版</strong>を選ぶ：Gemini for Workspace・ChatGPT Enterprise・Claude for Work は<strong>学習対象外</strong>がデフォルト</li>
+      <li><strong>送信前のチェック癖をつける</strong>：「これ、外に漏れて大丈夫？」と一拍置く</li>
+    </ol>
+
+    <h3>③ 「やってはいけない」入力</h3>
+    <ul style="padding-left:22px;font-size:13px;line-height:1.85;color:var(--text);">
+      <li>❌ 事業者の <strong>決算書・確定申告書</strong> をそのまま投入（数値は概算化して匿名で）</li>
+      <li>❌ 事業者の <strong>マイナンバー・銀行口座・暗証番号</strong></li>
+      <li>❌ 商工会内部の <strong>会員名簿・名簿データベース</strong></li>
+      <li>❌ 補助金 <strong>申請書原本</strong>（事業者名・住所込みで投入しない／必ず匿名化）</li>
+      <li>❌ 個人面談記録の <strong>実名のまま</strong>の投入</li>
+    </ul>
+
+    <h3>④ NotebookLM のプライバシー保護</h3>
+    <p style="font-size:13px;line-height:1.85;color:var(--text);margin-bottom:8px;">
+      NotebookLM は Google が提供する <strong>資料読み込み専用 AI</strong>。プロンプト集の中でも特に <strong>機密性の高い資料（補助金要項・統計レポート・面談記録）</strong> の精読・要約に推奨しています。
+    </p>
+    <ul style="padding-left:22px;font-size:13px;line-height:1.85;color:var(--text);">
+      <li>✅ <strong>投入した資料はモデル学習には使われません</strong>（Google 公式：プライバシー保護がデフォルト）</li>
+      <li>✅ ノートブックは <strong>あなたのアカウント内に保存</strong>。他ユーザーには見えない</li>
+      <li>✅ <strong>有料プラン（AI Pro / Workspace 版）</strong> なら追加のデータ保護契約（DPA）あり</li>
+    </ul>
+
+    <p style="font-size:13px;line-height:1.85;color:var(--text);margin-top:14px;margin-bottom:8px;">
+      <strong>⚠️ Gemini アプリから NotebookLM を呼び出す時の注意</strong>
+    </p>
+    <ul style="padding-left:22px;font-size:13px;line-height:1.85;color:var(--text);">
+      <li>Gemini の <code>＋</code> →「その他のアップロード」→「<strong>ノートブック</strong>」で NotebookLM のノートを参照可能</li>
+      <li>このとき、ノートブックの内容は <strong>Gemini 側に取り込まれます</strong>。Gemini のデータ取扱（学習設定）が適用</li>
+      <li>→ Gemini 側で <strong>「アクティビティの保存」をオフ</strong> にしておけば、NotebookLM の中身も学習対象外</li>
+      <li>機密性の高い資料を扱うときは、<strong>NotebookLM 単体で操作する方が安心</strong>です</li>
+    </ul>
+
+    <h3>⑤ 各社のプライバシー基準・準拠認証</h3>
+    <p style="font-size:13px;line-height:1.85;color:var(--text);margin-bottom:8px;">
+      各社は <strong>国際的なセキュリティ・プライバシー認証</strong>を取得しており、企業向けには <strong>DPA（データ処理契約）</strong>を提供しています（2026年5月時点）。日本の <strong>個人情報保護法（APPI）</strong> については Google Cloud のみ単独の準拠ステートメントを公開しています。
+    </p>
+    <ul style="padding-left:22px;font-size:13px;line-height:1.85;color:var(--text);">
+      <li><strong>Google（Gemini / NotebookLM）</strong>：<br>
+      認証：SOC 1／2／3、ISO/IEC 27001／27017／27018／42001、FedRAMP High、HIPAA（BAA対応プランあり）<br>
+      日本：<strong>APPI 準拠ページを公式に掲載</strong>／GDPR：Cloud Data Processing Addendum 提供<br>
+      <a href="https://cloud.google.com/security/compliance/appi-japan" target="_blank" style="font-size:12px;">→ APPI（Google Cloud 公式）</a> ／
+      <a href="https://policies.google.com/privacy?hl=ja" target="_blank" style="font-size:12px;">Google プライバシー ポリシー</a></li>
+
+      <li><strong>OpenAI（ChatGPT）</strong>：<br>
+      認証：ISO/IEC 27001:2022、27017、27018、27701、CSA STAR Level 1、SOC 2 Type II（対象：Enterprise／Edu／Business／API）<br>
+      日本：データレジデンシー（日本リージョン保存）を Enterprise／API 向けに提供／GDPR：DPA 提供<br>
+      <a href="https://openai.com/enterprise-privacy/" target="_blank" style="font-size:12px;">→ OpenAI Enterprise Privacy</a> ／
+      <a href="https://trust.openai.com/" target="_blank" style="font-size:12px;">OpenAI Trust Portal</a></li>
+
+      <li><strong>Anthropic（Claude）</strong>：<br>
+      認証：SOC 2 Type I & II、ISO/IEC 27001:2022、ISO/IEC 42001:2023（AIマネジメントシステム）、HIPAA（BAA対応）<br>
+      日本：データレジデンシーは現時点で米国経由（EUリージョンも未提供）／GDPR：DPA 提供／<strong>For Work（Team/Enterprise）は学習データ非使用が契約上保証</strong><br>
+      <a href="https://trust.anthropic.com/" target="_blank" style="font-size:12px;">→ Anthropic Trust Center</a> ／
+      <a href="https://privacy.claude.com/" target="_blank" style="font-size:12px;">Anthropic Privacy Center</a></li>
+    </ul>
+    <p style="font-size:12px;color:var(--text-soft);margin-top:10px;font-style:italic;">
+      ※ 2026年5月時点の公式情報。利用前に必ず最新の規約をご確認ください。<br>
+      ※ 商工会業務での本格利用には、<strong>有料の Workspace 版・Enterprise 版</strong>（学習対象外がデフォルト・DPA 締結可能）の検討を推奨。
+    </p>
+  </section>
+
+  <!-- ========== 巻末 ========== -->
+  <section class="footer-block">
+    <h2>📖 巻末：応用へつなげる</h2>
+    <p style="font-size:13.5px;margin-bottom:14px;">
+      毎回プロンプトをコピペするのは続きません。気に入った3〜5本を <strong>Gemini の Gem</strong> に登録すれば、1クリックで呼び出せる「自分専用 AI」になります。
+    </p>
+    <p style="font-size:13.5px;margin-bottom:14px;">
+      特におすすめ：
+      <ul>
+        <li><strong>C1 持続化補助金 23問Q&A</strong> → 補助金相談Gem</li>
+        <li><strong>C3 事業計画書1次チェック</strong> → 計画書レビュー Gem</li>
+        <li><strong>B2 面談メモ要点整理</strong> → 議事録 Gem</li>
+      </ul>
+    </p>
+    <p style="font-size:13px;color:var(--text-soft);">
+      これらのプロンプトは <strong>ChatGPT・Claude</strong> でもそのまま使えます。
+      ChatGPT → GPTs / Projects に登録／Claude → Projects に登録。
+    </p>
+
+    <div class="rules" style="border-left:4px solid var(--warn);">
+      <h3 style="color:var(--warn);">⚠️ 守るべき3つのルール</h3>
+      <ol style="padding-left:20px;font-size:13px;line-height:1.9;color:var(--text);">
+        <li><strong>個人情報・機密情報は AI に直接入れない</strong>（事業者名・住所・財務数値は匿名化）</li>
+        <li><strong>AI の出力は必ず人が確認</strong>（法令・補助金要件・統計数値は原典で裏取り）</li>
+        <li><strong>著作権・商標に配慮</strong>（画像生成では既存キャラ・ロゴを生成しない）</li>
+      </ol>
+    </div>
+
+    <div class="meta-bottom">
+      最終更新：2026年6月3日 ／ 作成：NAWAGATE株式会社 ／ <a href="https://nawagate.com" target="_blank">https://nawagate.com</a>
+    </div>
+  </section>
+</main>
+
+<!-- TOPに戻るボタン -->
+<button class="back-to-top" id="backToTop" aria-label="ページ上部へ戻る">
+  <span class="arrow">↑</span>
+  <span class="label">TOP</span>
+</button>
+
+<script>
+  // ===== TOPに戻るボタン =====
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      backToTop.classList.add('show');
+    } else {
+      backToTop.classList.remove('show');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ===== コピーボタン =====
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const targetId = btn.getAttribute('data-target');
+      const text = document.getElementById(targetId).innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        const orig = btn.innerText;
+        btn.innerText = 'コピー完了';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.innerText = 'コピー完了';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerText = '📋 コピー';
+          btn.classList.remove('copied');
+        }, 2000);
+      }
+    });
+  });
+
+  // ===== 検索 =====
+  const searchBox = document.getElementById('searchBox');
+  searchBox.addEventListener('input', e => {
+    const q = e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.card').forEach(card => {
+      const text = card.innerText.toLowerCase();
+      if (!q || text.includes(q)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
